@@ -21,6 +21,10 @@ class AuctionViewSet(viewsets.ModelViewSet):
         return queryset.filter(status=Auction.Status.ACTIVE)
 
     def check_and_complete(self, auction):
+        print(f"is_expired: {auction.is_expired}")
+        print(f"end_time: {auction.end_time}")
+        print(f"now: {timezone.now()}")
+        print(f"status: {auction.status}")
         if auction.is_expired:
             highest_bid = auction.bids.order_by('-amount').first()
             auction.status = Auction.Status.COMPLETED
